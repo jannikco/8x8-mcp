@@ -1,374 +1,60 @@
 {
   "schemaVersion": 1,
-  "status": "ready",
-  "verification": "mock-only",
-  "releaseEligible": true,
-  "maintainer": "jannikco",
-  "license": "MIT",
-  "sourceRevision": "4bebfa776d572d18ce98ba4366d68a3f619fe91523f8f47925b5a5516edbe78e",
-  "evidence": [
-    "Actual tools/call and direct-provider request contract tests"
-  ],
-  "provenance": [
-    "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json"
-  ],
   "id": "8x8-mcp",
   "kind": "provider-connector",
   "product": "pipmcp",
   "title": "8x8 MCP server",
-  "description": "Inspect messaging account balance/status and explicitly approve one SMS in the correct account region.",
-  "operationIds": [
-    "eightx8_get_balance",
-    "eightx8_get_sms",
-    "eightx8_send_sms"
+  "description": "Use 8x8 with AI agents through one PipMCP API key, actual hosted schemas and governed execution.",
+  "status": "ready",
+  "verification": "mock-only",
+  "releaseEligible": true,
+  "operationIds": [],
+  "maintainer": "jannikco",
+  "license": "MIT",
+  "attributionSlug": "github-8x8-mcp",
+  "sourceRevision": "bea28c441a1bd8acdb821d192cc2d6d7da4450a17bb1f9361b6139f289a3b8ff",
+  "qualityVersion": 2,
+  "artifactType": "connector",
+  "evidence": [
+    "Gateway HTTP transport fixtures",
+    "Generated stdio wrapper discovery/call fixtures"
   ],
+  "provenance": [
+    "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json"
+  ],
+  "utility": {
+    "problem": "Inspect messaging account balance/status and explicitly approve one SMS in the correct account region.",
+    "output": "Actual hosted tool schemas and durable governed execution receipts"
+  },
   "appSlug": "8x8",
   "appName": "8x8",
-  "providerDocs": "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json",
-  "providerWebsite": "https://www.8x8.com/",
-  "authentication": {
-    "type": "bearer",
-    "requiredCredentialFields": [
-      "token"
-    ],
-    "settings": {},
-    "requiredHeaderNames": [],
-    "helpUrl": "https://developer.8x8.com/connect/docs/authentication",
-    "tenantRequired": true,
-    "accountParameterNames": [
-      "sub_account_id",
-      "account_id"
-    ]
-  },
-  "attributionSlug": "github-8x8-mcp",
-  "artifactType": "connector",
-  "qualityVersion": 2,
   "connectorId": "8x8",
-  "connector": {
-    "id": "8x8",
-    "name": "8x8",
-    "version": "0.1.0",
-    "baseUrl": "https://sms.8x8.com",
-    "auth": {
-      "type": "bearer",
-      "env": "EIGHTX8_API_KEY"
-    },
-    "tools": [
-      {
-        "name": "eightx8_get_balance",
-        "description": "eightx8 get balance",
-        "method": "GET",
-        "path": "/api/v1/accounts/{accountId}/balance",
-        "readOnly": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "accountId": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "accountId"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [
-            "accountId"
-          ],
-          "query": {},
-          "body": {}
-        },
-        "approvalRequired": false,
-        "provenance": [
-          "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json"
-        ],
-        "evidence": {
-          "state": "documented",
-          "providerLiveValidation": "not-run"
-        },
-        "sampleArguments": {
-          "accountId": "REPLACE_WITH_AUTHORIZED_ACCOUNT_ID"
-        }
-      },
-      {
-        "name": "eightx8_get_sms",
-        "description": "eightx8 get sms",
-        "method": "GET",
-        "path": "/api/v1/subaccounts/{subAccountId}/messages/{umid}",
-        "readOnly": true,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "subAccountId": {
-              "type": "string"
-            },
-            "umid": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "subAccountId",
-            "umid"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [
-            "subAccountId",
-            "umid"
-          ],
-          "query": {},
-          "body": {}
-        },
-        "approvalRequired": false,
-        "provenance": [
-          "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json"
-        ],
-        "evidence": {
-          "state": "documented",
-          "providerLiveValidation": "not-run"
-        },
-        "sampleArguments": {
-          "subAccountId": "REPLACE_WITH_AUTHORIZED_SUBACCOUNT_ID",
-          "umid": "REPLACE_WITH_AUTHORIZED_MESSAGE_ID"
-        }
-      },
-      {
-        "name": "eightx8_send_sms",
-        "description": "Send one SMS to an explicitly authorized recipient. Default endpoint is Asia-Pacific; select the documented host for your account region.",
-        "method": "POST",
-        "path": "/api/v1/subaccounts/{subAccountId}/messages",
-        "readOnly": false,
-        "inputSchema": {
-          "type": "object",
-          "properties": {
-            "subAccountId": {
-              "type": "string"
-            },
-            "source": {
-              "type": "string"
-            },
-            "destination": {
-              "type": "string"
-            },
-            "text": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "subAccountId",
-            "source",
-            "destination",
-            "text"
-          ],
-          "additionalProperties": false
-        },
-        "bindings": {
-          "path": [
-            "subAccountId"
-          ],
-          "query": {},
-          "body": {
-            "source": "source",
-            "destination": "destination",
-            "text": "text"
-          }
-        },
-        "approvalRequired": true,
-        "provenance": [
-          "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json"
-        ],
-        "evidence": {
-          "state": "documented",
-          "providerLiveValidation": "not-run"
-        },
-        "sampleArguments": {
-          "subAccountId": "REPLACE_WITH_AUTHORIZED_SUBACCOUNT_ID",
-          "source": "Sandbox",
-          "destination": "+15555550100",
-          "text": "Authorized sandbox test message."
-        }
-      }
-    ],
-    "workflow": {
-      "name": "8x8-workflow",
-      "description": "Inspect messaging account balance/status and explicitly approve one SMS in the correct account region.",
-      "steps": [
-        "eightx8_get_balance",
-        "eightx8_get_sms",
-        "eightx8_send_sms"
-      ]
-    },
-    "provenance": [
-      "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json"
-    ],
-    "sourceEvidence": {
-      "state": "documented",
-      "providerLiveValidation": "not-run",
-      "checkedAt": "2026-11-08",
-      "operationCount": 3,
-      "kind": "official-openapi",
-      "sha256": "6c73370c07c755a327d59f41c998870de68121089aaeb35dbe15f5087e0f96e9"
-    },
-    "setup": {
-      "requiresPipMcpAccount": false,
-      "credentialsHelpUrl": "https://developer.8x8.com/connect/docs/authentication",
-      "instructions": "In the 8x8 Connect dashboard go to API Keys (connect.8x8.com/messaging/api-keys) and click Create API Key, then copy it. Also enter your sub-account ID, and the SMS host for your region: sms.8x8.com (Asia-Pacific), sms.us.8x8.com (North America), sms.8x8.uk (Europe) or sms.8x8.id (Indonesia)."
-    },
-    "baseUrlOptions": [
-      "https://sms.8x8.com",
-      "https://sms.us.8x8.com",
-      "https://sms.8x8.uk",
-      "https://sms.8x8.id"
-    ],
-    "sampleWarning": "Example IDs are placeholders, not known provider records. Replace them with authorized sandbox/account IDs. Contact emails, file URLs and recipient numbers must be replaced with data you are authorized to use. Examples never authorize a write.",
-    "repoId": "8x8-mcp",
-    "appSlug": "8x8",
-    "product": "pipmcp",
-    "artifactType": "connector",
-    "sourceRevision": "4bebfa776d572d18ce98ba4366d68a3f619fe91523f8f47925b5a5516edbe78e",
-    "capabilityEvidence": {
-      "local": {
-        "level": "Tested",
-        "operations": [
-          {
-            "name": "eightx8_get_balance",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          },
-          {
-            "name": "eightx8_get_sms",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          },
-          {
-            "name": "eightx8_send_sms",
-            "level": "Tested",
-            "evidenceRefs": [
-              "Provider request/stdio contract tests"
-            ],
-            "method": "contract-fixture"
-          }
-        ],
-        "evidenceRefs": [
-          "Provider request/stdio contract tests"
-        ],
-        "mode": "local"
-      },
-      "managed": {
-        "level": "Documented",
-        "operations": [
-          {
-            "name": "eightx8_get_balance",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          },
-          {
-            "name": "eightx8_get_sms",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          },
-          {
-            "name": "eightx8_send_sms",
-            "level": "Documented",
-            "evidenceRefs": [],
-            "method": "documentation"
-          }
-        ],
-        "evidenceRefs": [],
-        "mode": "managed"
-      }
-    },
-    "authentication": {
-      "type": "bearer",
-      "requiredCredentialFields": [
-        "token"
-      ],
-      "settings": {},
-      "requiredHeaderNames": [],
-      "helpUrl": "https://developer.8x8.com/connect/docs/authentication",
-      "tenantRequired": true,
-      "accountParameterNames": [
-        "sub_account_id",
-        "account_id"
-      ]
-    },
-    "managedAvailability": {
-      "status": "listed",
-      "checkedAt": "2026-11-08T12:29:10.433747+00:00"
-    }
-  },
+  "executionAuthority": "pipmcp-gateway",
+  "version": "1.0.0",
+  "agentReady": true,
   "capabilityEvidence": {
     "local": {
       "level": "Tested",
       "operations": [
         {
-          "name": "eightx8_get_balance",
+          "name": "gateway_transport",
           "level": "Tested",
+          "method": "contract-fixture",
           "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
-        },
-        {
-          "name": "eightx8_get_sms",
-          "level": "Tested",
-          "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
-        },
-        {
-          "name": "eightx8_send_sms",
-          "level": "Tested",
-          "evidenceRefs": [
-            "Provider request/stdio contract tests"
-          ],
-          "method": "contract-fixture"
+            "Generated gateway/stdio fixtures"
+          ]
         }
       ],
       "evidenceRefs": [
-        "Provider request/stdio contract tests"
+        "Generated gateway/stdio fixtures"
       ],
       "mode": "local"
     },
     "managed": {
       "level": "Documented",
-      "operations": [
-        {
-          "name": "eightx8_get_balance",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        },
-        {
-          "name": "eightx8_get_sms",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        },
-        {
-          "name": "eightx8_send_sms",
-          "level": "Documented",
-          "evidenceRefs": [],
-          "method": "documentation"
-        }
-      ],
+      "operations": [],
       "evidenceRefs": [],
       "mode": "managed"
     }
-  },
-  "utility": {
-    "problem": "Inspect messaging account balance/status and explicitly approve one SMS in the correct account region.",
-    "output": "Actual provider API results through local MCP tools"
   }
 }

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "product": "pipmcp",
+  "credential": "PIPMCP_API_KEY",
+  "skills": [
+    {
+      "name": "pipmcp-8x8",
+      "description": "Connect AI agents to 8x8 using one PipMCP API key and actual hosted tool discovery."
+    }
+  ],
+  "files": {
+    "skills/pipmcp-8x8/SKILL.md": "397acba3f483402350e98fe0299ed81031266466653b331c3e1f604009596515"
+  }
+}
