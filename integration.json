@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "status": "ready",
+  "verification": "mock-only",
+  "releaseEligible": true,
+  "maintainer": "jannikco",
+  "license": "MIT",
+  "sourceRevision": "cfe168309f7a0e2663209a182eb2059ec2e433105f676ff860966f92b62a9183",
+  "evidence": [
+    "Source-backed provider setup metadata",
+    "Offline configuration and MCP protocol tests"
+  ],
+  "provenance": [
+    "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json"
+  ],
+  "id": "8x8-mcp",
+  "kind": "mcp-setup",
+  "product": "pipmcp",
+  "title": "8x8 MCP setup and connection checker",
+  "description": "Generate 8x8 MCP client configuration, inspect available tools and validate hosted endpoint access through PipMCP.",
+  "operationIds": [],
+  "appSlug": "8x8",
+  "appName": "8x8",
+  "providerDocs": "https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json",
+  "providerWebsite": "https://www.8x8.com/",
+  "authentication": {
+    "type": "bearer",
+    "requiredCredentialFields": [
+      "token"
+    ],
+    "requiredHeaderNames": [],
+    "helpUrl": "https://developer.8x8.com/connect/docs/authentication",
+    "tenantRequired": true,
+    "accountParameterNames": [
+      "sub_account_id",
+      "account_id"
+    ]
+  },
+  "attributionSlug": "github-8x8-mcp"
+}
