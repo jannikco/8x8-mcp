@@ -1,0 +1,128 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "8x8 selected operations",
+    "version": "0.1.0",
+    "description": "Reviewed local connector bindings for manual API import. No provider credentials are included; authentication and hosted execution require separate configuration and tests."
+  },
+  "servers": [
+    {
+      "url": "https://sms.8x8.com"
+    }
+  ],
+  "paths": {
+    "/api/v1/accounts/{accountId}/balance": {
+      "get": {
+        "operationId": "eightx8_get_balance",
+        "summary": "eightx8 get balance",
+        "parameters": [
+          {
+            "name": "accountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-pipmcp-read-only": true,
+        "responses": {
+          "200": {
+            "description": "Provider response; inspect provider documentation for result fields."
+          }
+        }
+      }
+    },
+    "/api/v1/subaccounts/{subAccountId}/messages/{umid}": {
+      "get": {
+        "operationId": "eightx8_get_sms",
+        "summary": "eightx8 get sms",
+        "parameters": [
+          {
+            "name": "subAccountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "umid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-pipmcp-read-only": true,
+        "responses": {
+          "200": {
+            "description": "Provider response; inspect provider documentation for result fields."
+          }
+        }
+      }
+    },
+    "/api/v1/subaccounts/{subAccountId}/messages": {
+      "post": {
+        "operationId": "eightx8_send_sms",
+        "summary": "Send one SMS to an explicitly authorized recipient. Default endpoint is Asia-Pacific; select the documented host for your account region.",
+        "parameters": [
+          {
+            "name": "subAccountId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-pipmcp-read-only": false,
+        "responses": {
+          "200": {
+            "description": "Provider response; inspect provider documentation for result fields."
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  },
+                  "destination": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "source",
+                  "destination",
+                  "text"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "providerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "providerAuth": []
+    }
+  ]
+}

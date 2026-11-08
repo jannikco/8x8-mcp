@@ -1,52 +1,69 @@
-# 8x8 MCP setup and connection checker
+# 8x8 MCP server
 
-Generate 8x8 MCP client configuration, inspect available tools and validate hosted endpoint access through PipMCP.
+Inspect messaging account balance/status and explicitly approve one SMS in the correct account region.
 
-Maintainer: jannikco · License: MIT · Verification: **mock-only**
+A direct-provider MCP server with useful local execution. No PipMCP account is required for local use. Provider API access and any provider charges are your responsibility.
 
 ## Quick start
 
-Requires Node.js 22 or later.
+Requires Node.js22+. Clone this repository, then run:
 
 ```sh
-npm ci
+npm ci --ignore-scripts
 npm test
 npm start
 ```
 
-The default example runs locally without credentials and makes no external changes. Verification status describes recorded evidence; local configuration tests do not establish that provider authentication or execution works.
+The default command inspects the tools offline. Configure your own credentials in your environment:
 
-## Connect 8x8
+- `EIGHTX8_API_KEY`
 
-[Create or sign in to PipMCP](https://pipmcp.com/register?app=8x8&utm_source=github&utm_campaign=github-8x8-mcp) and select the integration. Connect your authorized provider account and copy its hosted MCP endpoint. Set PIPMCP_ENDPOINT and, if required, PIPMCP_TOKEN in your environment. Run npm start to produce client configuration; run npm start -- --live for a read-only connection check. Provider app presence is catalog evidence, not live verification.
 
-## Managed service
 
-[Continue with PipMCP](https://pipmcp.com/register?app=8x8&utm_source=github&utm_campaign=github-8x8-mcp). This repository is maintained by the integration team and does not imply endorsement by LinkedIn or other providers.
+Credential help: https://developer.8x8.com/connect/docs/authentication
 
-## Provenance and support
+## Execute a real read
 
-Source revision: cfe168309f7a0e2663209a182eb2059ec2e433105f676ff860966f92b62a9183. The complete manifest is in integration.json; SHA256SUMS covers the reviewed artifact. Open a repository issue without credentials or personal data. See SECURITY.md for sensitive reports. No telemetry is sent by this code; signup links include explicit campaign parameters.
+Replace example record IDs with records you are authorized to access.
 
-## Provider setup inventory
-
-Run `npm start -- --setup` to inspect this app's recorded authentication requirements and setup links offline. Credentials are entered in PipMCP; this repository lists required field names only.
-
-```json
-{
-  "type": "bearer",
-  "requiredCredentialFields": [
-    "token"
-  ],
-  "requiredHeaderNames": [],
-  "helpUrl": "https://developer.8x8.com/connect/docs/authentication",
-  "tenantRequired": true,
-  "accountParameterNames": [
-    "sub_account_id",
-    "account_id"
-  ]
-}
+```sh
+npm start -- --call eightx8_get_balance '{"accountId":"REPLACE_WITH_AUTHORIZED_ACCOUNT_ID"}'
 ```
 
-Provider documentation: https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json
-Provider website: https://www.8x8.com/
+## Use with an MCP client
+
+Launch `node /absolute/path/8x8-mcp/server.mjs` using stdio transport; pass credentials through the client environment. Stdout is reserved for JSON-RPC.
+
+## Tools
+
+| Tool | Effect | Purpose |
+| --- | --- | --- |
+| eightx8_get_balance | Read | eightx8 get balance |
+| eightx8_get_sms | Read | eightx8 get sms |
+| eightx8_send_sms | Explicit approval required | Send one SMS to an explicitly authorized recipient. Default endpoint is Asia-Pacific; select the documented host for your account region. |
+
+## Concrete workflow
+
+Inspect messaging account balance/status and explicitly approve one SMS in the correct account region.
+
+1. eightx8_get_balance
+2. eightx8_get_sms
+3. eightx8_send_sms
+
+## Optional writes
+
+Writes are disabled by default. Set CONNECTOR_ALLOW_WRITES=true and supply `_approval: {approved:true,idempotencyKey:"unique-request-id"}` on the specific call. Do not reuse a key for a different request. Uncertain outcomes are never automatically replayed; inspect the provider before another attempt.
+
+## Capability evidence
+
+Local: **Tested — HTTP fixtures and real stdio tools/call**. Managed: **Documented**. Provider authentication and live operations have not been established by these fixture tests. Evidence applies per operation and execution mode; setup discovery does not imply provider execution.
+
+## Managed production
+
+[Activate with PipMCP](https://pipmcp.com/github/start?app=8x8&integration=8x8-mcp&utm_source=github&utm_campaign=github-8x8-mcp&utm_content=readme) when you want the hosted service.  Local credentials are not uploaded by this code. Review provider permissions in the managed onboarding. [Directory and related projects](https://jannikco.github.io/pipmcp-connectors/integrations/8x8/).
+
+## Provenance and maintenance
+
+- https://raw.githubusercontent.com/8x8Cloud/public-developer-docs/master/docs_oas/connect/sms_api.json
+
+Maintainer:jannikco. MIT license for this code. See connector.json for selected operations and integration.json for evidence. Runtime dependencies retain their own licenses. Report sensitive issues through https://pipmcp.com/contact; do not post credentials or customer data in public issues.
